@@ -160,3 +160,8 @@ Docker nos avisará de que no es posible:
 	tainer "54e9827bd10ab2825e1b3e4d3bf7a8cbdf778b472359c655d72d9c09e753500a". You have to remove (or re
 	name) that container to be able to reuse that name.
 	See 'docker run --help'.
+
+Eliminamos el contenenedor hola-1
+
+	$ sudo docker rm hola-1
+	hola-1
