@@ -6,13 +6,16 @@
 
 ### 2. Instalacion de kubeclt
 
-    $ curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+    $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     $ chmod +x ./kubectl
     $ sudo mv ./kubectl /usr/local/bin/kubectl
 
 ### 3. Instalacion de minikube
     $ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo cp minikube /usr/local/bin/ && rm minikube
-    $ sudo usermod -aG docker <usuario>
+    $ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    $ sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    $ sudo groupadd docker
+    $ sudo usermod -aG docker $USER
     $ newgrp docker
     $ ssh-keygen -t rsa -b 4096
     $ minikube start --driver=docker
