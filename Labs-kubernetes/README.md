@@ -4,7 +4,7 @@
 - Maquina Virtual linux (la misma que usamos para la parte de docker) con al menos 4GB libres en el home del usuario y 2 CPUs
 - Conexion a internet
 
-### 2. Instalacion de kubeclt
+### 2. Instalacion de kubectl
 
     $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     $ chmod +x ./kubectl
