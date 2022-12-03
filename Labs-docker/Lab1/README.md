@@ -6,7 +6,7 @@ En este laboratorio vamos a poner en practica la gestion de contenedores.
 
 Comando para ejecutar un contenedor con un proceso ejecutándose dentro:
 
-    $ docker container run centos ping -c 5 127.0.0.1
+    $ sudo docker container run centos ping -c 5 127.0.0.1
 
 La salida sería como esta:
 
@@ -49,14 +49,14 @@ Es posible que también hayas notado que la palabra clave `latest` aparece algun
 
 Si ejecutas el contenedor anterior nuevamente en tu entorno, las primeras cinco líneas de la salida no aparecerán, ya que Docker encontrará la imagen del contenedor en el registry local, por lo que no tendrá que descargarla. Inténtalo y verifica:
 
-    $ docker container run centos ping -c 5 127.0.0.1
+    $ sudo docker container run centos ping -c 5 127.0.0.1
 
 
 #### 2. Ejecutar un contenedor en background
 
 El comando Docker sería el siguiente:
 
-    $ docker container run -d --name quotes alpine /bin/sh -c "while :; do echo 'esto es una prueba'; printf '\n'; sleep 5; done"
+    $ sudo docker container run -d --name quotes alpine /bin/sh -c "while :; do echo 'esto es una prueba'; printf '\n'; sleep 5; done"
 
 En la expresión anterior, usaste dos nuevos parámetros de línea de comando, `-d` y `--name`. La opción `-d` le indica a Docker que ejecute el proceso del contenedor en background. El parámetro `--name` se usa para dar al contenedor un nombre explícito en este ejemplo (quotes).
 
@@ -64,18 +64,18 @@ Si no especificas un nombre de contenedor explícito, Docker asignará automáti
 
 Una conclusión importante es que el nombre del contenedor debe ser único. Asegúrate de que el contenedor que acabamos de crear esté activo y en ejecución:
 
-    $ docker container ls -l
+    $ sudo docker container ls -l
 
 Comprueba los logs del contenedor:
 
-    $ docker logs <CONTAINER_ID>
+    $ sudo docker logs <CONTAINER_ID>
 
 
 #### 3. Listando contenedores
 
 A medida que continúes ejecutando contenedores a lo largo del tiempo tendrás muchos en tu sistema. Para averiguar qué se está ejecutando actualmente en tu host, puede utilizar el siguiente comando:
 
-    $ docker container ls
+    $ sudo docker container ls
 
 Esto mostrará una lista de todos los contenedores actualmente en ejecución.
 
@@ -88,17 +88,17 @@ Por defecto, Docker genera siete columnas con los siguientes significados:
 
 Si deseas listar todos los contenedores definidos en tu sistema, puede utilizar el parámetro `-a` o `--all` como se muestra a continuación:
 
-    $ docker container ls -a
+    $ sudo docker container ls -a
 
 Se mostrará una lista de contenedores en cualquier estado, ya sea created, running o exited (creado, ejecutándose o terminado respectivamente).
 
 A veces, puede ser que solo quieras listar los ID de todos los contenedores. Para lograr esto, tienes que utilizar el parámetro -q:
 
-    $ docker container ls -q
+    $ sudo docker container ls -q
 
 Podrías preguntarte cuál sería la utilidad de esto. Aquí hay un ejemplo:
 
-    $ docker container rm -f $(docker container ls -a -q)
+    $ sudo docker container rm -f $(sudo docker container ls -a -q)
 
 El comando anterior elimina todos los contenedores actualmente definidos en el sistema, incluidos los detenidos. El comando rm significa remover.
 
@@ -107,11 +107,11 @@ El comando anterior elimina todos los contenedores actualmente definidos en el s
 
 A veces, necesitarás detener temporalmente un contenedor en ejecución. Inicia nuevamente el contenedor del ejemplo anterior:
 
-    $ docker container run -d --name quotes alpine /bin/sh -c "while :; do echo 'esto es una prueba'; printf '\n'; sleep 5; done"
+    $ sudo docker container run -d --name quotes alpine /bin/sh -c "while :; do echo 'esto es una prueba'; printf '\n'; sleep 5; done"
 
 Ahora, puedes detener este contenedor con el siguiente comando:
 
-    $ docker container stop quotes
+    $ sudo docker container stop quotes
 
 Cuando intentes detener el contenedor, probablemente notarás que tarda un tiempo (unos 10 segundos) hasta que se ejecuta. ¿Por qué sucede de esta manera? Docker envía la Señal SIGTERM de linux al proceso principal que se ejecuta dentro del contenedor.
 
@@ -123,8 +123,8 @@ En el comando anterior, el nombre del contenedor se utiliza para especificar el 
 
 Hay varias maneras de hacerlo. La forma manual es listar todos los contenedores en ejecución y encontrar el que estás buscando en la lista. Sólo tienes que copiar su ID desde allí, por ejemplo:
 
-    $ docker container ls -a
-    $ docker container ls -a | grep quotes | awk '{print $1}'
+    $ sudo docker container ls -a
+    $ sudo docker container ls -a | grep quotes | awk '{print $1}'
 
 Aquí utilizamos AWK para obtener el primer campo que es el ID del contenedor.
 
@@ -132,10 +132,10 @@ Aquí utilizamos AWK para obtener el primer campo que es el ID del contenedor.
 
 El comando para eliminar un contenedor es el siguiente:
 
-    $ docker container rm <container ID o container name>
+    $ sudo docker container rm <container ID o container name>
 
 Para nuestro contenedor por ejemplo:
 
-    $ docker container rm quotes
+    $ sudo docker container rm quotes
 
 A veces, eliminar un contenedor en ejecución no funcionará; Si desea forzar la eliminación, puedes utilizar el parámetro de línea de comandos `-f` o `--force`.
