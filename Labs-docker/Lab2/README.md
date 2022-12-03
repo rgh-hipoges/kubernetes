@@ -18,11 +18,11 @@ Ahora ya nos hemos traido la imagen base. Para añadirle capas de forma interact
 
 Arrancamos el contenedor:
 
-    $ docker container run -dit --name node-express-server node
+    $ sudo docker container run -dit --name node-express-server node
 
 Entramos en el contenedor:
 
-    $ docker exec -it node-express-server /bin/bash
+    $ sudo docker exec -it node-express-server /bin/bash
 
 Una vez dentro del contenedor crearemos directorios y ficheros y finalmente con un `docker commit` crearemos una nueva imagen ya personalizada.
 
@@ -81,17 +81,17 @@ Ahora probamos la aplicación ejecutando el index.js:
 
 En este punto la imagen esta personalizada tal y como la queremos, ya podemos crear una nueva imagen llamada `my-node-server` a partir de las modificaciones que hemos hecho al contenedor:
 
-    $ docker container commit node-express-server my-node-server
+    $ sudo docker container commit node-express-server my-node-server
 
 Comprobamos que la imagen se crea correctamente:
 
-    $ docker images
+    $ sudo docker images
     REPOSITORY                                              TAG                  IMAGE ID            CREATED             SIZE
     my-node-server                                          latest               8e21de81395b        20 seconds ago      994MB
 
 A continuación arrancaremos un contenedor de nombre `current-time` con la imagen que hemos creado:
 
-    $ docker container run -dit --name current-time -p 3080:3080 my-node-server node /usr/src/app/index.js
+    $ sudo docker container run -dit --name current-time -p 3080:3080 my-node-server node /usr/src/app/index.js
 
 Para probar la imagen abrir en un navegador `localhost:3080/time`
 
@@ -127,29 +127,30 @@ Este es el contenido del `Dockerfile`, los pasos que se describen son los mismos
 
 Para crear la imagen a partir del Dockerfile, ejecutaremos un `docker build`:
 
-    $ docker build -t my-node-server:1.0 .
+    $ sudo docker build -t my-node-server:1.0 .
 
 En este punto tendremos en local la nueva imagen:
 
-    $ docker images
+    $ sudo docker images
     REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
     my-node-server                1.0                 69fb5d3d952c        2 minutes ago       940MB
 
  y podriamos arrancar un contenedor a partir de dicha imagen:
 
-    $ docker container run -dit --name new-node-server my-node-server:1.0
+    $ sudo docker container run -dit --name new-node-server my-node-server:1.0
 
 Si entramos en el contenedor que acabamos de crear veremos que el directorio `/usr/src/app` contiene los ficheros que se indicaba que se copiaran en el Dockerfile:
 
-    $ docker exec -it new-node-server /bin/bash
+    $ sudo docker exec -it new-node-server /bin/bash
     root@4142e9490d90:/usr/src/app# ls -la
-    total 36
-    drwxr-xr-x  1 root root  4096 Jun 17 14:05 .
-    drwxr-xr-x  1 root root  4096 Jun 17 14:05 ..
-    -rw-r--r--  1 root root   292 Jun 17 13:28 index.js
-    drwxr-xr-x 52 root root  4096 Jun 17 14:05 node_modules
-    -rw-r--r--  1 root root 14290 Jun 17 14:05 package-lock.json
-    -rw-r--r--  1 root root   555 Jun 17 13:28 package.json
+        total 60
+    drwxr-xr-x  1 root root  4096 Dec  3 18:01 .
+    drwxr-xr-x  1 root root  4096 Dec  3 18:01 ..
+    -rw-rw-r--  1 root root   292 Dec  3 17:19 index.js
+    drwxr-xr-x 59 root root  4096 Dec  3 18:01 node_modules
+    -rw-r--r--  1 root root 39693 Dec  3 18:01 package-lock.json
+    -rw-rw-r--  1 root root   555 Dec  3 17:19 package.json
+
 
 Salir del contenedor con exit
 
@@ -159,24 +160,24 @@ Con este método podemos guardar una imagen que tengamos en un fichero `.tar` (c
 
 Vamos a guardar la imagen que creamos en el caso anterior (my-node-server:1.0) en un fichero .tar:
 
-    $ docker save my-node-server:1.0 > mynodeserver.tar
+    $ sudo docker save my-node-server:1.0 > mynodeserver.tar
 
 A continuación vamos a borrar la imagen (si el contenedor aun esta corriendo hay que pararlo y borrarlo antes de borrar la imagen):
 
-    $ docker stop new-node-server
+    $ sudo docker stop new-node-server
     new-node-server
-    $ docker rm new-node-server
+    $ sudo docker rm new-node-server
     new-node-server
     
-    $ docker image ls |grep my-node-server
+    $ sudo docker image ls |grep my-node-server
     my-node-server                                          1.0                  4c9d7b781a89        8 minutes ago       945MB
     my-node-server                                          latest               8e21de81395b        21 hours ago        994MB
 
-    $ docker image rm my-node-server:1.0
+    $ sudo docker image rm my-node-server:1.0
 
 Y ahora vamos a volver a crear la imagen a partir del fichero tar:
 
-    $ docker load < mynodeserver.tar
+    $ sudo docker load < mynodeserver.tar
     bf5297e6e7ac: Loading layer [==================================================>]  3.072kB/3.072kB
     3c6a1dc4cadc: Loading layer [==================================================>]  4.096kB/4.096kB
     0175ea967955: Loading layer [==================================================>]  4.029MB/4.029MB
