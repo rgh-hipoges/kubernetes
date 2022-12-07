@@ -6,7 +6,7 @@ En este laboratorio practicaremos como crear y gestionar Deployments.
 1. Crear un namespace llamado `deploy-nx`. Crear el yaml de un `deployment` a partir de la image `nginx:1.7.8`, llamado `nginx`:
 
        $ kubectl create ns deploy-nx
-       $ kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -ndeploy-nx -o yaml > deploy.yaml
+       $ kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run=client -ndeploy-nx -o yaml > deploy.yaml
 
 2. Editar el fichero yaml del deployment `deploy.yaml`, creado en el paso anterior para que nuestro deploy tenga 2 replicas y definiremos el puerto 80 como el puerto que el contenedor expone:
 
