@@ -9,7 +9,7 @@ En este laboratorio practicaremos como crear y usar los recursos descritos.
 
 2. Crear otro pod de nginx pero de forma declarativa. Para generar el yaml usaremos la opción `--dry-run)=client` y redirigiremos la salida a un fichero yaml:
 
-       $ kubectl run nginx-1 --image=nginx --restart=Never --dry-run=client -o yaml > pod.yam
+       $ kubectl run nginx-1 --image=nginx --restart=Never --dry-run=client -o yaml > pod.yaml
 
        $ cat pod.yaml
 
